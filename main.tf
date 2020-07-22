@@ -1,5 +1,5 @@
 provider "aws" {
-  region  = "us-east-1"
+  region  = var.region
 }
 resource "aws_vpc" "test-env" {
   cidr_block = "10.0.0.0/16"
@@ -61,7 +61,7 @@ resource "aws_security_group" "MySecurityGroup" {
     cidr_blocks = ["0.0.0.0/0"]
     }
     tags = {
-        Name = "MYSG"
+        Name = "Test_SG"
     }
 }
 
@@ -75,13 +75,13 @@ user_data = <<-EOF
 		#!/bin/bash
 		yum install httpd -y
 		chkconfig httpd on
-		echo "<h1>launched through $(curl http://169.254.169.254/latest/meta-data/public-ipv4)</h1>" > /var/www/html/index.html
+		echo "<h1>Hello from $(curl http://169.254.169.254/latest/meta-data/public-ipv4)</h1>" > /var/www/html/index.html
 		sudo systemctl enable httpd
         sudo systemctl start httpd
         echo successful 
 	    EOF
 tags ={
-    Name = "my_server"
+    Name = "my_test_server"
 }
 }
 
