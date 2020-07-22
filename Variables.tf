@@ -1,0 +1,3 @@
+variable "mapPublicIP" {
+    default = true
+}
